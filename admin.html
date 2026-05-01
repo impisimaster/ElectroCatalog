@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | ElectroCatalog</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="admin" data-title-key="titles.admin">
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="brand" href="index.html">
+                <span class="brand-mark brand-mark-image">
+                    <img class="brand-logo-image" src="фото/ChatGPT%20Image%2029%20квіт.%202026%20р.,%2002_45_33.png" alt="ElectroCatalog logo">
+                </span>
+                <div>
+                    <h1>ElectroCatalog</h1>
+                    <p data-i18n="admin.brandSubtitle">Admin panel</p>
+                </div>
+            </a>
+            <nav class="header-actions" data-auth-actions></nav>
+        </div>
+    </header>
+
+    <main class="container page-content">
+        <section id="adminAccessDenied" class="panel empty-state hidden">
+            <h2 data-i18n="admin.accessDeniedTitle">Admin access required</h2>
+            <p data-i18n="admin.accessDeniedText">You need to log in with an administrator account to manage products and categories.</p>
+            <a class="button primary" href="login.html" data-i18n="common.goToLogin">Go to login</a>
+        </section>
+
+        <section id="adminApp" class="hidden">
+            <div class="panel-title-row admin-heading">
+                <div>
+                    <span class="eyebrow" data-i18n="admin.headingEyebrow">Administration</span>
+                    <h2 data-i18n="admin.headingTitle">Catalog management</h2>
+                </div>
+                <a class="button secondary" href="index.html" data-i18n="common.backToCatalog">Back to catalog</a>
+            </div>
+
+            <div class="admin-grid">
+                <section class="panel">
+                    <div class="panel-title-row">
+                        <div>
+                            <span class="eyebrow" data-i18n="admin.productsEyebrow">Products</span>
+                            <h3 id="productFormTitle" data-i18n="admin.addProduct">Add product</h3>
+                        </div>
+                    </div>
+
+                    <form id="productForm" class="form-stack">
+                        <input id="productId" type="hidden">
+
+                        <label class="field">
+                            <span data-i18n="common.name">Name</span>
+                            <input id="productName" type="text" required>
+                        </label>
+
+                        <label class="field">
+                            <span data-i18n="common.description">Description</span>
+                            <textarea id="productDescription" rows="4" required></textarea>
+                        </label>
+
+                        <label class="field">
+                            <span data-i18n="common.specifications">Specifications</span>
+                            <textarea id="productSpecifications" rows="6" data-i18n-placeholder="admin.specificationsPlaceholder"></textarea>
+                        </label>
+                        <p class="helper-text" data-i18n="admin.specificationsHint">Add one characteristic per line, for example: Display: 6.7-inch OLED</p>
+
+                        <div class="form-row">
+                            <label class="field">
+                                <span data-i18n="common.price">Price</span>
+                                <input id="productPrice" type="number" min="0" step="0.01" required>
+                            </label>
+
+                            <label class="field">
+                                <span data-i18n="common.manufacturer">Manufacturer</span>
+                                <input id="productManufacturer" type="text" required>
+                            </label>
+                        </div>
+
+                        <label class="field">
+                            <span data-i18n="common.uploadImage">Upload image</span>
+                            <input id="productImageFile" type="file" accept="image/*">
+                        </label>
+
+                        <p id="productImageStatus" class="helper-text" data-i18n="admin.imageHint">Choose an image from your device. If you skip it, a placeholder image will be used.</p>
+                        <div id="productImagePreviewWrap" class="image-preview hidden">
+                            <img id="productImagePreview" class="image-preview-img" alt="Product preview">
+                        </div>
+
+                        <div class="form-stack image-controls">
+                            <label class="checkbox-field">
+                                <input id="productAllowExpand" type="checkbox" checked>
+                                <span data-i18n="admin.allowImageExpand">Show full image on hover if needed</span>
+                            </label>
+
+                            <label class="field">
+                                <span data-i18n="admin.imagePositionX">Horizontal position</span>
+                                <div class="range-field">
+                                    <input id="productImagePositionX" type="range" min="0" max="100" value="50">
+                                    <strong id="productImagePositionXValue">50%</strong>
+                                </div>
+                            </label>
+
+                            <label class="field">
+                                <span data-i18n="admin.imagePositionY">Vertical position</span>
+                                <div class="range-field">
+                                    <input id="productImagePositionY" type="range" min="0" max="100" value="50">
+                                    <strong id="productImagePositionYValue">50%</strong>
+                                </div>
+                            </label>
+                        </div>
+
+                        <label class="field">
+                            <span data-i18n="admin.galleryImages">Gallery images</span>
+                            <input id="productGalleryFiles" type="file" accept="image/*" multiple>
+                        </label>
+                        <p id="productGalleryStatus" class="helper-text" data-i18n="admin.galleryHint">Add extra photos for the product details page gallery.</p>
+                        <div id="productGalleryPreview" class="gallery-preview-list hidden"></div>
+
+                        <section class="variant-builder">
+                            <div class="panel-title-row compact-row">
+                                <div>
+                                    <span class="eyebrow" data-i18n="admin.colorVariantsEyebrow">Color variants</span>
+                                    <h4 data-i18n="admin.colorVariantsTitle">Colors and galleries</h4>
+                                </div>
+                                <button id="addColorVariant" class="button secondary" type="button" data-i18n="admin.addColorVariant">Add color</button>
+                            </div>
+                            <p class="helper-text" data-i18n="admin.colorVariantsHint">Each color can have its own gallery. The default color is used as the main card photo.</p>
+                            <div id="colorVariantsList" class="variant-list"></div>
+                        </section>
+
+                        <label class="field">
+                            <span data-i18n="common.category">Category</span>
+                            <select id="productCategory" required></select>
+                        </label>
+
+                        <div class="form-actions">
+                            <button class="button primary" type="submit" data-i18n="common.saveProduct">Save product</button>
+                            <button id="cancelProductEdit" class="button ghost" type="button" data-i18n="common.cancel">Cancel</button>
+                        </div>
+                        <p id="productFormMessage" class="form-message" aria-live="polite"></p>
+                    </form>
+                </section>
+
+                <section class="panel">
+                    <div class="panel-title-row">
+                        <div>
+                            <span class="eyebrow" data-i18n="admin.categoriesEyebrow">Categories</span>
+                            <h3 id="categoryFormTitle" data-i18n="admin.addCategory">Add category</h3>
+                        </div>
+                    </div>
+
+                    <form id="categoryForm" class="form-stack">
+                        <input id="categoryId" type="hidden">
+
+                        <label class="field">
+                            <span data-i18n="common.name">Name</span>
+                            <input id="categoryName" type="text" required>
+                        </label>
+
+                        <label class="field">
+                            <span data-i18n="common.parentCategory">Parent category</span>
+                            <select id="categoryParent"></select>
+                        </label>
+
+                        <div class="form-actions">
+                            <button class="button primary" type="submit" data-i18n="common.saveCategory">Save category</button>
+                            <button id="cancelCategoryEdit" class="button ghost" type="button" data-i18n="common.cancel">Cancel</button>
+                        </div>
+                        <p id="categoryFormMessage" class="form-message" aria-live="polite"></p>
+                    </form>
+                </section>
+            </div>
+
+            <div class="admin-grid listings">
+                <section class="panel">
+                    <div class="panel-title-row">
+                        <div>
+                            <span class="eyebrow" data-i18n="admin.inventoryEyebrow">Inventory</span>
+                            <h3 data-i18n="admin.productsList">Products list</h3>
+                        </div>
+                    </div>
+                    <div id="productsTable" class="table-list"></div>
+                </section>
+
+                <section class="panel">
+                    <div class="panel-title-row">
+                        <div>
+                            <span class="eyebrow" data-i18n="admin.structureEyebrow">Structure</span>
+                            <h3 data-i18n="admin.categoriesList">Categories list</h3>
+                        </div>
+                    </div>
+                    <div id="categoriesTable" class="table-list"></div>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/data.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

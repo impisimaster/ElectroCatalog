@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ElectroCatalog</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="catalog" data-title-key="titles.catalog">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-mark brand-mark-image">
+          <img class="brand-logo-image" src="фото/ChatGPT%20Image%2029%20квіт.%202026%20р.,%2002_45_33.png" alt="ElectroCatalog logo">
+        </span>
+        <div>
+          <h1>ElectroCatalog</h1>
+          <p data-i18n="common.brandSubtitle">Electronic product catalog</p>
+        </div>
+      </a>
+      <nav class="header-actions" data-auth-actions></nav>
+    </div>
+  </header>
+
+  <main class="container page-content">
+    <section class="hero">
+      <div>
+        <span class="eyebrow" data-i18n="catalog.heroEyebrow">Smart shopping starts here</span>
+        <h2 data-i18n="catalog.heroTitle">Find electronics by category, brand, and price in seconds.</h2>
+        <p data-i18n="catalog.heroText">Browse the catalog as a guest, sign in to keep your account, or manage the inventory as an admin.</p>
+      </div>
+      <div class="hero-stats">
+        <article>
+          <strong id="productCountStat">0</strong>
+          <span data-i18n="catalog.statsProducts">Products</span>
+        </article>
+        <article>
+          <strong id="categoryCountStat">0</strong>
+          <span data-i18n="catalog.statsCategories">Categories</span>
+        </article>
+        <article>
+          <strong id="manufacturerCountStat">0</strong>
+          <span data-i18n="catalog.statsBrands">Brands</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel filters-panel">
+      <div class="panel-title-row">
+        <div>
+          <span class="eyebrow" data-i18n="catalog.toolsEyebrow">Catalog tools</span>
+          <h3 data-i18n="catalog.toolsTitle">Search and filters</h3>
+        </div>
+        <p id="resultsCount" class="results-count">0 products found</p>
+      </div>
+
+      <div class="filters-grid">
+        <label class="field">
+          <span data-i18n="common.searchByName">Search by name</span>
+          <input id="searchInput" type="search" data-i18n-placeholder="common.searchPlaceholder" placeholder="Start typing a product name">
+        </label>
+
+        <label class="field">
+          <span data-i18n="common.category">Category</span>
+          <select id="categoryFilter">
+            <option value="">All categories</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span data-i18n="common.subcategory">Subcategory</span>
+          <select id="subcategoryFilter">
+            <option value="">All subcategories</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span data-i18n="common.manufacturer">Manufacturer</span>
+          <select id="manufacturerFilter">
+            <option value="">All manufacturers</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span data-i18n="common.minPrice">Min price</span>
+          <input id="minPriceFilter" type="number" min="0" data-i18n-placeholder="common.minPricePlaceholder" placeholder="0">
+        </label>
+
+        <label class="field">
+          <span data-i18n="common.maxPrice">Max price</span>
+          <input id="maxPriceFilter" type="number" min="0" data-i18n-placeholder="common.maxPricePlaceholder" placeholder="">
+        </label>
+      </div>
+
+      <div class="filter-actions">
+        <button id="resetFiltersButton" class="button secondary" type="button" data-i18n="catalog.resetFilters">Reset filters</button>
+      </div>
+    </section>
+
+    <section>
+      <div id="productGrid" class="product-grid"></div>
+      <div id="emptyState" class="empty-state hidden">
+        <h3 data-i18n="catalog.emptyTitle">No products match these filters</h3>
+        <p data-i18n="catalog.emptyText">Try changing the category, price range, or search text.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/data.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

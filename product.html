@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details | ElectroCatalog</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="product" data-title-key="titles.product">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-mark brand-mark-image">
+          <img class="brand-logo-image" src="фото/ChatGPT%20Image%2029%20квіт.%202026%20р.,%2002_45_33.png" alt="ElectroCatalog logo">
+        </span>
+        <div>
+          <h1>ElectroCatalog</h1>
+          <p data-i18n="common.brandSubtitle">Electronic product catalog</p>
+        </div>
+      </a>
+      <nav class="header-actions" data-auth-actions></nav>
+    </div>
+  </header>
+
+  <main class="container page-content">
+    <section id="productNotFound" class="panel empty-state hidden">
+      <h2 id="productNotFoundTitle" data-i18n="productPage.notFound">Product not found</h2>
+      <p id="productNotFoundText" data-i18n="productPage.notFoundText">The requested product could not be found or may have been removed.</p>
+      <a class="button primary" href="index.html" data-i18n="common.backToCatalog">Back to catalog</a>
+    </section>
+
+    <section id="productDetailsPage" class="product-page-layout hidden">
+      <article class="panel product-detail-card">
+        <div class="product-detail-media">
+          <img id="productDetailImage" class="product-detail-image" alt="">
+        </div>
+        <div class="product-detail-content">
+          <span class="eyebrow" data-i18n="productPage.detailsEyebrow">Product details</span>
+          <div id="productDetailMeta" class="product-meta"></div>
+          <h2 id="productDetailName" class="product-detail-title"></h2>
+          <p id="productDetailDescription" class="product-detail-description"></p>
+
+          <section id="productColorsSection" class="product-colors-block hidden">
+            <div class="panel-title-row compact-row">
+              <div>
+                <span class="eyebrow" data-i18n="productPage.colorsEyebrow">Choose a color</span>
+                <h3 data-i18n="productPage.colorsTitle">Available colors</h3>
+              </div>
+            </div>
+            <div id="productColorOptions" class="color-options"></div>
+          </section>
+
+          <div class="product-detail-info">
+            <div class="detail-row">
+              <strong data-i18n="common.manufacturer">Manufacturer</strong>
+              <span id="productDetailManufacturer"></span>
+            </div>
+            <div id="productDetailColorRow" class="detail-row hidden">
+              <strong data-i18n="common.color">Color</strong>
+              <span id="productDetailColor"></span>
+            </div>
+            <div class="detail-row">
+              <strong data-i18n="common.category">Category</strong>
+              <span id="productDetailCategory"></span>
+            </div>
+            <div class="detail-row">
+              <strong data-i18n="productPage.fullDescription">Full description</strong>
+              <span id="productDetailFullDescription"></span>
+            </div>
+            <div class="detail-row">
+              <strong data-i18n="common.price">Price</strong>
+              <span id="productDetailPrice"></span>
+            </div>
+            <div class="detail-row">
+              <strong>ID</strong>
+              <span id="productDetailId"></span>
+            </div>
+          </div>
+
+          <div class="product-detail-actions">
+            <button id="buyButton" class="button primary" type="button" data-i18n="common.buy">Buy</button>
+            <a class="button secondary" href="index.html" data-i18n="common.backToCatalog">Back to catalog</a>
+          </div>
+          <p id="buyMessage" class="form-message" aria-live="polite"></p>
+        </div>
+      </article>
+
+      <section id="productGallerySection" class="panel hidden">
+        <div class="panel-title-row">
+          <div>
+            <span class="eyebrow" data-i18n="productPage.galleryEyebrow">Product gallery</span>
+            <h3 data-i18n="productPage.galleryTitle">More photos</h3>
+          </div>
+        </div>
+        <div class="product-gallery-layout">
+          <button id="galleryPrevButton" class="button ghost gallery-nav-button" type="button" aria-label="Previous photo">‹</button>
+          <div id="productGalleryThumbs" class="product-gallery-thumbs"></div>
+          <button id="galleryNextButton" class="button ghost gallery-nav-button" type="button" aria-label="Next photo">›</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title-row">
+          <div>
+            <span class="eyebrow" data-i18n="productPage.specificationsEyebrow">Technical details</span>
+            <h3 data-i18n="common.specifications">Specifications</h3>
+          </div>
+        </div>
+        <div id="productSpecificationsList" class="specifications-list"></div>
+      </section>
+
+      <section class="panel reviews-panel">
+        <div class="panel-title-row">
+          <div>
+            <span class="eyebrow" data-i18n="productPage.reviewsEyebrow">Customer feedback</span>
+            <h3 data-i18n="productPage.reviewsTitle">Reviews</h3>
+          </div>
+        </div>
+        <div id="reviewsList" class="reviews-list"></div>
+      </section>
+
+      <section class="panel review-form-panel">
+        <div class="panel-title-row">
+          <div>
+            <span class="eyebrow" data-i18n="productPage.reviewsEyebrow">Customer feedback</span>
+            <h3 data-i18n="productPage.addReviewTitle">Add review</h3>
+          </div>
+        </div>
+
+        <p id="guestReviewMessage" class="helper-text hidden" data-i18n="productPage.loginToReview">Log in to leave a review</p>
+
+        <form id="reviewForm" class="form-stack hidden">
+          <label class="field">
+            <span data-i18n="common.rating">Rating</span>
+            <select id="reviewRating" required>
+              <option value="5">5</option>
+              <option value="4">4</option>
+              <option value="3">3</option>
+              <option value="2">2</option>
+              <option value="1">1</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span data-i18n="common.comment">Comment</span>
+            <textarea id="reviewComment" rows="5" required></textarea>
+          </label>
+
+          <div class="form-actions">
+            <button class="button primary" type="submit" data-i18n="common.submitReview">Submit review</button>
+          </div>
+          <p id="reviewMessage" class="form-message" aria-live="polite"></p>
+        </form>
+      </section>
+    </section>
+  </main>
+
+  <div id="orderModal" class="modal-overlay hidden">
+    <div class="modal-card checkout-modal panel" role="dialog" aria-modal="true" aria-labelledby="orderModalTitle">
+      <div class="modal-header">
+        <div>
+          <span class="eyebrow" data-i18n="productPage.checkoutEyebrow">Checkout</span>
+          <h3 id="orderModalTitle" data-i18n="productPage.checkoutTitle">Order checkout</h3>
+        </div>
+        <button id="closeOrderModalButton" class="modal-close-button" type="button" aria-label="Close">&times;</button>
+      </div>
+
+      <div class="checkout-summary">
+        <div class="detail-row">
+          <strong data-i18n="common.name">Name</strong>
+          <span id="orderSummaryProduct"></span>
+        </div>
+        <div id="orderSummaryColorRow" class="detail-row hidden">
+          <strong data-i18n="common.color">Color</strong>
+          <span id="orderSummaryColor"></span>
+        </div>
+        <div class="detail-row">
+          <strong data-i18n="common.price">Price</strong>
+          <span id="orderSummaryPrice"></span>
+        </div>
+      </div>
+
+      <form id="orderForm" class="form-stack">
+        <div class="checkout-grid">
+          <section class="panel checkout-section">
+            <div class="panel-title-row compact-row">
+              <div>
+                <span class="eyebrow" data-i18n="productPage.deliveryEyebrow">Delivery</span>
+                <h4 data-i18n="productPage.deliveryTitle">Delivery details</h4>
+              </div>
+            </div>
+
+            <div class="form-stack">
+              <label class="field">
+                <span data-i18n="productPage.fullName">Full name</span>
+                <input id="orderCustomerName" type="text" required>
+              </label>
+
+              <div class="form-row">
+                <label class="field">
+                  <span data-i18n="productPage.phone">Phone</span>
+                  <input id="orderPhone" type="tel" inputmode="tel" required>
+                </label>
+
+                <label class="field">
+                  <span data-i18n="productPage.email">Email</span>
+                  <input id="orderEmail" type="email" required>
+                </label>
+              </div>
+
+              <div class="form-row">
+                <label class="field">
+                  <span data-i18n="productPage.city">City</span>
+                  <input id="orderCity" type="text" required>
+                </label>
+
+                <label class="field">
+                  <span data-i18n="productPage.postalCode">Postal code</span>
+                  <input id="orderPostalCode" type="text" required>
+                </label>
+              </div>
+
+              <label class="field">
+                <span data-i18n="productPage.address">Address</span>
+                <input id="orderAddress" type="text" required>
+              </label>
+
+              <label class="field">
+                <span data-i18n="productPage.deliveryNotes">Delivery notes</span>
+                <textarea id="orderNotes" rows="3"></textarea>
+              </label>
+            </div>
+          </section>
+
+          <section class="panel checkout-section">
+            <div class="panel-title-row compact-row">
+              <div>
+                <span class="eyebrow" data-i18n="productPage.paymentEyebrow">Payment</span>
+                <h4 data-i18n="productPage.paymentTitle">Card details</h4>
+              </div>
+            </div>
+
+            <div class="form-stack">
+              <label class="field">
+                <span data-i18n="productPage.cardHolder">Card holder</span>
+                <input id="orderCardHolder" type="text" required>
+              </label>
+
+              <label class="field">
+                <span data-i18n="productPage.cardNumber">Card number</span>
+                <input id="orderCardNumber" type="text" inputmode="numeric" autocomplete="cc-number" maxlength="19" required>
+              </label>
+
+              <div class="form-row">
+                <label class="field">
+                  <span data-i18n="productPage.cardExpiry">Expiry date</span>
+                  <input id="orderCardExpiry" type="text" inputmode="numeric" autocomplete="cc-exp" maxlength="5" placeholder="MM/YY" required>
+                </label>
+
+                <label class="field">
+                  <span data-i18n="productPage.cardCvv">CVV</span>
+                  <input id="orderCardCvv" type="password" inputmode="numeric" autocomplete="cc-csc" maxlength="4" required>
+                </label>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="form-actions">
+          <button class="button primary" type="submit" data-i18n="productPage.confirmOrder">Confirm order</button>
+          <button id="cancelOrderButton" class="button ghost" type="button" data-i18n="common.cancel">Cancel</button>
+        </div>
+        <p id="orderFormMessage" class="form-message" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/product.js"></script>
+</body>
+</html>
